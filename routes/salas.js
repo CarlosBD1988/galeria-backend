@@ -4,9 +4,9 @@ const router = express.Router();
 
 router.post('/create', createSala);
 router.post('/delete', deleteSala);
-router.post('/update', updateSala);
+router.put('/update/:nombre', updateSala);
 router.get('/readAll', readAllSalas);
-router.get('/readOne', readOneSala);
+router.get('/readOne/:nombre', readOneSala);
 
 
 module.exports = router;

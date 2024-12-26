@@ -55,15 +55,33 @@ exports.deleteSala = async (req, res) => {
 };
 
 exports.updateSala = async (req, res) => {
-    res.status(400).json({ message: 'Sala actualizada exitosamente'});
+
+    try 
+    {
+        const { nombre } = req.params;
+        const updatedSala = req.body; 
+
+        const result = await Sala.findOneAndUpdate({ nombre }, updatedSala, { new: true });
+        if (!result) {
+            return res.status(404).json({ message: 'Sala no encontrada' });
+        }       
+        res.status(200).json({ message: 'Sala actualizada exitosamente'});
+
+
+    }
+ catch(error)
+    {
+        res.status(500).json({ error: 'Error interno metodo updateSala , ' + error.message});
+    }
+    
 
 };
 
 exports.readAllSalas = async (req, res) => {
-    try{
+    try
+    {
         const allSalas= await Sala.find();
         res.status(200).json({ message: allSalas});
-
     }
     catch(error)
     {
@@ -74,6 +92,19 @@ exports.readAllSalas = async (req, res) => {
 };
 
 exports.readOneSala= async (req, res) => {
-    res.status(400).json({ message: 'Sala encontrada'});
+    try{
+        const { nombre } = req.params;
+    const sala = await Sala.findOne({ nombre });
+
+    if (!sala) {
+        return res.status(404).json({ error: 'Sala no encontrada' });
+    }
+    res.status(200).json({ message:sala});
+    }
+    catch(error)
+    {
+        res.status(500).json({ error: 'Error interno metodo readOneSala , ' + error.message});
+    }
+    
 
 };
