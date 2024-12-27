@@ -13,6 +13,7 @@ app.use(express.json());
 app.use('/uploads', express.static('uploads')); // Carpeta pública para imágenes
 
 // Conexión a MongoDB
+console.log("Valor de MONGO_URI:", process.env.MONGO_URI);
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('MongoDB conectado'))
     .catch(err => {
